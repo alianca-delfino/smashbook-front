@@ -1,4 +1,7 @@
 # Smashbook Front
+[![Netlify Status](https://api.netlify.com/api/v1/badges/dfccf722-838c-4a20-8a2a-dd548ceafc48/deploy-status)](https://app.netlify.com/sites/smashbook-development/deploys)
+
+[Preview](https://smashbook-development.netlify.com/)
 
 ## Technologies
 

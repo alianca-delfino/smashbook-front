@@ -1,0 +1,7 @@
+{
+  "mainFont": "'IBM Plex Sans', sans-serif",
+  "colors": {
+    "primary": "#ffec19",
+    "background": "#00126b"
+  }
+}

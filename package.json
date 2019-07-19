@@ -1,0 +1,51 @@
+{
+  "name": "smashbook-front",
+  "version": "0.0.1",
+  "description": "## Technologies",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "lint": "eslint src",
+    "commit": "git-cz",
+    "test": "jest src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alianca-delfino/smashbook-front.git"
+  },
+  "keywords": [
+    "smashbook"
+  ],
+  "author": "Aliança Delfino",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/alianca-delfino/smashbook-front/issues"
+  },
+  "homepage": "https://github.com/alianca-delfino/smashbook-front#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
+    "git-cz": "^3.2.1",
+    "jest": "^24.8.0",
+    "parcel": "^1.12.3"
+  },
+  "dependencies": {
+    "apollo-boost": "^0.4.3",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
+    "lodash": "^4.17.15",
+    "react": "^16.8.6",
+    "react-apollo": "^2.5.8",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "styled-components": "^4.3.2"
+  }
+}

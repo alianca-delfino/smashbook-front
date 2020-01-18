@@ -6,7 +6,6 @@
 ## Technologies
 
 - React
-- GraphQL with Apollo
 - Parcel
 - Jest
 - ESLint

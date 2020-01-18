@@ -6,6 +6,8 @@ import theme from './theme.json';
 
 const GlobalStyle = createGlobalStyle`
   body {
+    background: ${property('theme.colors.background')};
+    overflow-x: hidden;
     margin: 0;
     font-family: ${property('theme.mainFont')};
   }

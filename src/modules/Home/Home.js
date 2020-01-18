@@ -15,6 +15,7 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 5rem;
+  text-align: center;
   font-weight: 300;
   text-transform: uppercase;
   color: ${property('theme.colors.primary')}

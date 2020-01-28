@@ -1,83 +1,51 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import property from 'lodash/property';
+import React, { useState, useEffect, Fragment } from 'react';
+import debounce from 'lodash/debounce';
 
-import api from '../../utils/api';
-import EventStandings from './EventStandings';
+import { FabButton } from '../../components';
+import {
+  Wrapper, Title, LoadingComponent, SearchResult,
+} from './Components';
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100vW;
-  height: 100vH;
-  align-items: center;
-`;
+import AddTournament from './AddTournament';
+import services from './services';
 
-const Title = styled.h1`
-  font-size: 5rem;
-  text-align: center;
-  font-weight: 300;
-  text-transform: uppercase;
-  color: ${property('theme.colors.primary')}
-`;
-
-const Input = styled.input`
-  font-size: 1rem;
-  text-transform: uppercase;
-  background: transparent;
-  border: 0;
-  outline: none;
-  border-bottom: 2px solid ${property('theme.colors.primary')};
-  color: ${property('theme.colors.primary')};
-  padding: 5px 0;
-  width: 80%;
-  margin: 0 0 30px 0;
-`;
-
-const Button = styled.a`
-  text-decoration: none;
-  border-radius: 4px;
-  cursor: pointer;
-  text-transform: uppercase;
-  color: ${property('theme.colors.background')};
-  background: ${property('theme.colors.primary')};
-  padding: 15px 20px;
-`;
+const HomeComponent = (isLoading, events) => (
+  <Fragment>
+    <Title>Smashbook</Title>
+    { isLoading && <LoadingComponent /> }
+    { !isLoading && <SearchResult events={events} />}
+  </Fragment>
+);
 
 const Home = () => {
-  const [url, setUrl] = useState('');
-  const [eventInfo, setEventInfo] = useState(false);
+  const [events, setEvents] = useState('');
+  const [screen, setScreen] = useState('home');
+  const [loading, setLoading] = useState(true);
 
-  function changeUrl(e) {
-    setUrl(e.target.value);
-  }
+  const setLoadingDebounce = debounce(setLoading, 500);
+  useEffect(() => {
+    if (screen === 'home') {
+      services
+        .getEvents()
+        .then(data => setEvents(data))
+        .then(() => setLoadingDebounce(false));
+    }
+  }, [screen]);
 
-  function getEventInformations() {
-    const match = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g;
-    const [regResult] = url.matchAll(match);
-    const [,, path] = regResult;
-
-    const [, tournamentLabel, tournament, eventLabel, event] = path.split('/');
-    if (tournamentLabel !== 'tournament' || eventLabel !== 'events' || !tournament || !event) return;
-
-    api
-      .get(`event?eventUrl=tournament/${tournament}/event/${event}`)
-      .then(data => data.data)
-      .then(data => setEventInfo(data));
+  function setCurrentScreen(screenName) {
+    return function set() {
+      setScreen(screenName);
+    };
   }
 
   return (
     <Wrapper>
-      <Title>{ eventInfo ? eventInfo.name : 'Smashbook' }</Title>
-
-      {
-        !eventInfo && [
-          <Input onChange={changeUrl} value={url} type="text" placeholder="Informe uma URL do SmashGG" />,
-          <Button onClick={getEventInformations}>Pesquisar</Button>,
-        ]
+      { screen === 'home' && HomeComponent(loading, events) }
+      { screen === 'add' && <AddTournament close={setCurrentScreen('home')} /> }
+      { !loading
+        && screen !== 'add'
+        && <FabButton onClick={setCurrentScreen('add')}>+</FabButton>
       }
-
-      { eventInfo && <EventStandings standings={eventInfo.standings} />}
     </Wrapper>
   );
 };
